@@ -1,0 +1,19 @@
+Add this immediately after `output = model(...)` inside the `synthesize()` function in the upstream `synthesize.py`.
+The uploaded upstream file already imports `os` and `numpy as np`.
+
+        # Export inference-time variance adaptor predictions for later plotting.
+        variance_dir = os.path.join(train_config["path"]["result_path"], "variance_raw")
+        os.makedirs(variance_dir, exist_ok=True)
+        for i, sample_id in enumerate(batch[0]):
+            valid_len = int(batch[4][i].item()) if hasattr(batch[4][i], "item") else int(batch[4][i])
+            np.savez_compressed(
+                os.path.join(variance_dir, f"{sample_id}.npz"),
+                pitch=output[2][i, :valid_len].detach().cpu().numpy(),
+                energy=output[3][i, :valid_len].detach().cpu().numpy(),
+                log_duration=output[4][i, :valid_len].detach().cpu().numpy(),
+                duration=output[5][i, :valid_len].detach().cpu().numpy(),
+            )
+
+Then call `scripts/plot_variance.py` for each exported NPZ and place the resulting duration, pitch and energy figures under the matching language/sample folders.
+
+Important: this hook only works after a trained checkpoint exists. It exports predictions; it does not create or train a model.
