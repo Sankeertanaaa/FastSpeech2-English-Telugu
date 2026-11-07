@@ -1,0 +1,23 @@
+
+path:
+  ckpt_path: "./output/ckpt/Telugu"
+  log_path: "./output/log/Telugu"
+  result_path: "./output/result/Telugu"
+
+optimizer:
+  batch_size: 1
+  betas: [0.9, 0.98]
+  eps: 0.000000001
+  weight_decay: 0.0
+  grad_clip_thresh: 1.0
+  grad_acc_step: 8
+  warm_up_step: 400
+  anneal_steps: [3000, 5000, 8000]
+  anneal_rate: 0.3
+
+step:
+  total_step: 10000
+  log_step: 10
+  synth_step: 500
+  val_step: 100
+  save_step: 500

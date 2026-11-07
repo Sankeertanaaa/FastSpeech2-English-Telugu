@@ -1,0 +1,13 @@
+language: Telugu
+dataset_id: SPRINGLab/IndicTTS_Telugu
+source_split: train
+audio_column: audio
+sample_rate: 22050
+train_hours_target: 5.0
+validation_hours_target: 1.0
+seed: 2026
+shuffle_buffer: 1000
+text_frontend: telugu_phonemes_or_graphemes_to_be_implemented
+batch_size_start: 2
+gradient_accumulation_steps: 8
+precision: fp16
